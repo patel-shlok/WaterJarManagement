@@ -1,0 +1,110 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block style %}
+    <style type="text/css">
+    .cus{
+        position: relative;
+        top: -16px;
+    }
+    </style>
+{% endblock %}
+{% block title %}
+    <title>All Customers</title>
+{% endblock %}
+
+{% block header %}
+    {% include 'components/header.html' %}
+{% endblock %}
+
+{% block content %}
+
+    {% if user.is_authenticated %}
+        <div class="container">
+            <div class="row">
+                <div class="col-3  d-sm-none d-md-block">
+            <div class="text-center">
+                <h3>Your Profile</h3><hr>
+            </div>
+            <div class="card">
+              <div class="text-center card-header">
+                <a  style="color: black;font-size: 1.3rem" >{{user.name}} </a>
+            </div>
+              <div class="card-body">
+
+                            <p class="card-text">Username:&nbsp;&nbsp;{{ user.username }} </p>
+                            <p class="card-text">email:&nbsp;&nbsp;{{ user.email }} </p>
+                            <p class="card-text">CNIC:&nbsp;&nbsp;{{ user.cnic }} </p>
+                            <p class="card-text">Phone Number:&nbsp;&nbsp;{{ user.PhoneNo }} </p>
+
+
+
+                  <div class="text-center card-header bg-transparent">
+                <a href = '{% url 'adminProfile' %}'   class="btn btn-dark">View Profile</a>
+                  </div>
+              </div>
+            </div>
+        </div>
+        <div class="col-lg-9 col-md-9 col-sm-12 ">
+            {% if request.user.is_authenticated %}
+                        <div class="text-center">
+                            <h3>Customer List</h3>
+                            <hr>
+                        </div>
+
+                        <form method="post" action="">
+                            {% csrf_token %}
+                            {% load crispy_forms_tags %}
+                            <div class="row">
+                                <div class="col-5">
+                                    {{ form.name|as_crispy_field }}
+                                </div>
+                                <div class="col-2">
+                                    <br><br>
+                                    <button type="submit" class="btn btn-primary cus">Search</button>
+                                </div>
+                            </div>
+
+
+                        </form>
+
+                        <table class="table table-hover">
+                            <thead>
+                            <tr>
+                                <th scope="col">id</th>
+                                <th scope="col">Name</th>
+                                <th scope="col">Phone no.</th>
+                                <th scope="col">Email</th>
+
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for user in users %}
+                                <tr>
+                                    <td>{{ user.id }}</td>
+                                    <td><a href="{{ user.get_url }}">
+                                        <h5>{{ user.name }}</h5></a>
+                                    </td>
+                                    <td>{{ user.PhoneNo }}</td>
+                                    <td>{{ user.email }}</td>
+                                    {#                                    <td><a href="{% url 'edit_employee' employee.username %}" class="btn btn-primary"></a></td>#}
+                                </tr>
+                            {% endfor %}
+
+                            </tbody>
+                        </table>
+
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+
+    {% endif %}
+
+{% endblock %}
+
+{% block footer %}
+    {% include 'components/footer.html' %}
+{% endblock %}
+
+
+

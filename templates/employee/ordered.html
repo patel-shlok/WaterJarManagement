@@ -1,0 +1,107 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+    <title>Order</title>
+{% endblock %}
+
+{% block header %}
+    {% include 'components/header.html' %}
+{% endblock %}
+
+
+{% block content %}
+    <div class="container">
+    <div class="text-center">
+        <h1>Order By</h1>
+    </div>
+    <hr>
+    <div class="row">
+        <div class="col-md-6 text-center">
+            <h5>Customer:</h5>
+        </div>
+        <div class="col-md-6">
+            <p>{{ customer.name }}</p>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6 text-center">
+            <h5>Phone No:</h5>
+        </div>
+        <div class="col-md-6">
+            <p>{{ customer.PhoneNo }}</p>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6 text-center">
+            <h5>Address:</h5>
+        </div>
+        <div class="col-md-6">
+            <p>{{ order.address }}</p>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6 text-center">
+            <h5>Type:</h5>
+        </div>
+        {% if order.frequency == '1' %}
+            <div class="col-md-6">
+                <p>Only Once</p>
+            </div>
+        {% elif order.frequency == '2' %}
+            <div class="col-md-6">
+                <p>Regular</p>
+            </div>
+        {% endif %}
+    </div>
+    <hr>
+    <div class="text-center">
+        <h1>Order Details</h1>
+    </div>
+    <hr>
+
+
+    {% for items in quantity %}
+        <div class="row">
+            <div class="col-md-6 text-center">
+                <h5>{{ items.0 }}</h5>
+            </div>
+            <div class="col-md-6">
+                <p>{{ items.1 }}</p>
+            </div>
+        </div>
+    {% endfor %}
+    <hr>
+    <div class="row">
+        <div class="col-md-6 text-center">
+            <h5>Total price : </h5>
+        </div>
+        <div class="col-md-6">
+            <h5>{{ order.price }}</h5>
+        </div>
+    </div>
+    <hr>
+
+    <div class='text-center'>
+
+    {% if order.confirmed and not order.delivered and request.user.is_employee%}
+        <form method="post" action=".">
+            {% csrf_token %}
+            <button type="submit" value="1" class="btn btn-dark mt-2 px-5" >Deliver Order</button>
+        </form>
+    {% endif %}
+    <br>
+    <a class="btn btn-dark px-5" href="{% if order.delivered %}{% url 'delivered_orders' %}
+            {% elif order.confirmed %}{% url 'confirmed_not_delivered_orders' %}
+            {% elif not order.confirmed %}{% url 'not_confirmed' %}{% endif %}
+        ">Back</a>
+    </div>
+    </div>
+{% endblock %}
+
+
+
+
+{% block footer %}
+    {% include 'components/footer.html' %}
+{% endblock %}

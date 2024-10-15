@@ -1,0 +1,89 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block style %}
+    <style type="text/css">
+        .cus {
+            position: relative;
+            top: -17px;
+        }
+    </style>
+{% endblock %}
+{% block title %}
+    <title>All Customers</title>
+{% endblock %}
+
+{% block header %}
+    {% include 'components/header.html' %}
+{% endblock %}
+
+{% block content %}
+
+    {% if user.is_authenticated %}
+        <div class="container">
+            <div class="row">
+        <div class="col-3  d-sm-none d-md-block">
+            <div class="text-center">
+                <h3>Your Profile</h3><hr>
+            </div>
+            <div class="card">
+              <div class="text-center card-header">
+                <a  style="color: black;font-size: 1.3rem" >{{user.name}} </a>
+            </div>
+              <div class="card-body">
+
+            <p class="card-text">Employee id :&nbsp;&nbsp;{{ user.id }} </p>
+            <p class="card-text">Received Amount:&nbsp;&nbsp;{{ user.receivedAmount }} </p>
+            <p class="card-text">Received Bottles:&nbsp;&nbsp;{{ user.receivedBottle }} </p>
+
+
+
+                  <div class="text-center card-header bg-transparent">
+                <a href = '{% url 'customer_profile' %}'   class="btn btn-dark">View Profile</a>
+                  </div>
+              </div>
+            </div>
+        </div>
+        <div class="col-lg-9 col-md-9 col-sm-12 ">
+                    {% if request.user.is_authenticated %}
+                        <div class="text-center">
+                            <h3>Vehicle List</h3>
+                            <hr>
+                        </div>
+
+
+                        <table class="table table-hover">
+                            <thead>
+                            <tr>
+                                <th scope="col">id</th>
+                                <th scope="col">Registration No.</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for vehicle in vehicles %}
+                                <tr>
+                                    <td>
+                                        <h5>{{ vehicle.id }}</h5></td>
+                                    <td><a href="{% url 'employee_schedule' vehicle.registrationNo %}">
+                                        <h5>{{ vehicle.registrationNo }}</h5></a>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+
+                            </tbody>
+                        </table>
+
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+
+    {% endif %}
+
+{% endblock %}
+
+{% block footer %}
+    {% include 'components/footer.html' %}
+{% endblock %}
+
+
+

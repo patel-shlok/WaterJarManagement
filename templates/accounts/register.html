@@ -1,0 +1,83 @@
+{% extends 'base.html' %}
+{% load static %}
+
+
+{% block title %}
+    <title>Regitration</title>
+{% endblock %}
+
+
+{% block header %}
+    {% include 'components/header.html' %}
+{% endblock %}
+
+
+{% block content %}
+    <div class="container mt-5">
+        {% load crispy_forms_tags %}
+
+        <form method="post" novalidate>
+            {% csrf_token %}
+            <div class="row">
+                <div class="col-6">
+                    {{ form.name|as_crispy_field }}
+                </div>
+                <div class="col-6">
+                    {{ form.username|as_crispy_field }}
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12">
+                    {{ form.email|as_crispy_field }}
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-6">
+                    {{ form.password|as_crispy_field }}
+                </div>
+                <div class="col-6">
+                    {{ form.confirm_pass|as_crispy_field }}
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-6">
+                    {{ form.cnic|as_crispy_field }}
+                </div>
+                <div class="col-6">
+                    {{ form.PhoneNo |as_crispy_field }}
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12">
+                    {{ form.area|as_crispy_field }}
+                </div>
+
+            </div>
+
+            <div class="row">
+                <div class="col-12">
+                    {{ form.address |as_crispy_field }}
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12">
+                    {{ form.AverageWeekly |as_crispy_field }}
+                </div>
+            </div>
+            {% for field in form %}
+                {% if error in field.errors %}
+                    <p style="color:red">{{ error }}</p>
+                {% endif %}
+            {% endfor %}
+            <button type="submit" class="btn btn-dark">Register</button>
+        </form>
+    </div>
+
+{% endblock %}
+
+{% block footer %}
+    {% include 'components/footer.html' %}
+{% endblock %}
+
+</body>
+</html>

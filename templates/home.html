@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block header %}
+{% include 'components/header.html' %}
+{% endblock %}
+
+{% block content %}
+
+<a class="navbar-brand" href="#">
+            <img src={% static 'img/background.png' %} width="350" alt="">
+        </a>
+{% endblock %}
+
+{% block footer %}
+{% include 'components/footer.html' %}
+{% endblock %}

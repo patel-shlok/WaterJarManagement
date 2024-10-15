@@ -1,0 +1,140 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+    <title>Profile</title>
+{% endblock %}
+
+{% block header %}
+    {% include 'components/header.html' %}
+{% endblock %}
+
+{% block content %}
+    <div class="container">
+    <div class="text-center">
+        <h1>{{ customer.name }}</h1>
+    </div>
+    <hr>
+    <div class="container">
+
+        <div class="row">
+            <div class="col-md-6  text-lg-right text-md-right ">
+                <h5>CNIC:</h5>
+            </div>
+            <div class="col-md-6">
+                <p>{{ customer.cnic }}</p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6  text-lg-right text-md-right ">
+                <h5>Email:</h5>
+            </div>
+            <div class="col-md-6">
+                <p>{{ customer.email }}</p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6  text-lg-right text-md-right ">
+                <h5>Phone No:</h5>
+            </div>
+            <div class="col-md-6">
+                <p>{{ customer.PhoneNo }}</p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6  text-lg-right text-md-right ">
+                <h5>Address :</h5>
+            </div>
+            <div class="col-md-6">
+                <p>{{ customer.address }}</p>
+            </div>
+        </div>
+
+
+
+
+        {% if customer.is_corporate %}
+        <div class="row">
+            <div class="col-md-6  text-lg-right text-md-right ">
+                <h5>NTN :</h5>
+            </div>
+            <div class="col-md-6">
+                <p>{{ customer.NTN }}</p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6  text-lg-right text-md-right ">
+                <h5>STRN :</h5>
+            </div>
+            <div class="col-md-6">
+                <p>{{ customer.STRN }}</p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6  text-lg-right text-md-right ">
+                <h5>Registered Address :</h5>
+            </div>
+            <div class="col-md-6">
+                <p>{{ customer.registered_address }}</p>
+            </div>
+        </div>
+        {% endif %}
+        {% for asset in assets %}
+        <div class="row">
+            <div class="col-md-6  text-lg-right text-md-right ">
+                <h5>Number of {{ asset.asset.name}} :</h5>
+            </div>
+            <div class="col-md-6">
+                <p>{{ asset.amount }}</p>
+            </div>
+        </div>
+    {% endfor %}
+
+
+
+        <div class="row">
+            <div class="col-md-6  text-lg-right text-md-right ">
+                <h5>Monthly Bill :</h5>
+            </div>
+            <div class="col-md-6">
+                <p>{{ customer.MonthlyBill }}</p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6  text-lg-right text-md-right ">
+                <h5>Amount Due :</h5>
+            </div>
+            <div class="col-md-6">
+                <p>{{ customer.AmountDue }}</p>
+            </div>
+        </div>
+
+        <br><hr>
+
+
+
+
+                    <form method="post" action="" novalidate>{% csrf_token %}
+                        <div class="row">
+                            <div class="col-2"></div>
+                             <div class="col-8 text-center">
+                            {% load crispy_forms_tags %}
+                            <br>
+                            {{ info_form|crispy }}
+                            <hr>
+                            {{ product_form|crispy }}
+                            <button type="Submit" class="btn btn-dark px-5 mt-5">Save</button>
+
+                            </div>
+                        </div>
+                    </form>
+
+
+
+    </div>
+    </div>
+{% endblock %}
+
+{% block footer %}
+    {% include 'components/footer.html' %}
+{% endblock %}

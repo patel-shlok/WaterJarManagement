@@ -1,0 +1,93 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+    <title>All Customers</title>
+{% endblock %}
+
+{% block header %}
+    {% include 'components/header.html' %}
+{% endblock %}
+
+{% block content %}
+
+    {% if user.is_authenticated %}
+        <div class="container">
+            <div class="row">
+                    <div class="col-3  d-sm-none d-md-block">
+            <div class="text-center">
+                <h3>Your Profile</h3><hr>
+            </div>
+            <div class="card">
+              <div class="text-center card-header">
+                <a  style="color: black;font-size: 1.3rem" >{{user.name}} </a>
+            </div>
+              <div class="card-body">
+
+                            <p class="card-text">Username:&nbsp;&nbsp;{{ user.username }} </p>
+                            <p class="card-text">email:&nbsp;&nbsp;{{ user.email }} </p>
+                            <p class="card-text">CNIC:&nbsp;&nbsp;{{ user.cnic }} </p>
+                            <p class="card-text">Phone Number:&nbsp;&nbsp;{{ user.PhoneNo }} </p>
+
+
+
+                  <div class="text-center card-header bg-transparent">
+                <a href = '{% url 'adminProfile' %}'   class="btn btn-dark">View Profile</a>
+                  </div>
+              </div>
+            </div>
+        </div>
+        <div class="col-lg-9 col-md-9 col-sm-12 ">
+
+                    {% if request.user.is_authenticated %}
+                        <div class="text-center">
+                            <h3>Product List</h3>
+                            <hr>
+                        </div>
+
+                        <table class="table table-hover">
+                            <thead>
+                            <tr>
+                                <th scope="col">id</th>
+                                <th scope="col">Name</th>
+                                <th scope="col">Price</th>
+
+
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for product in products %}
+                                <tr>
+                                <td>
+                                        <h5>{{ product.id }}</h5>
+                                    </td>
+                                    <td><a href="{% url 'edit_product' product.id %}">
+                                        <h5>{{ product.name }}</h5></a>
+                                    </td>
+
+
+                                    <td>
+                                        <h5>{{ product.price }}</h5>
+                                    </td>
+
+                                </tr>
+                            {% endfor %}
+
+                            </tbody>
+                        </table>
+
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+
+    {% endif %}
+
+{% endblock %}
+
+{% block footer %}
+    {% include 'components/footer.html' %}
+{% endblock %}
+
+
+

@@ -1,0 +1,123 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+    <title>Confirmed Orders</title>
+{% endblock %}
+
+
+{% block header %}
+    {% include 'components/header.html' %}
+{% endblock %}
+
+{% block content %}
+    <div class="container">
+        {% if message %}
+            <div class="alert alert-danger text-center">
+                {{ message }}
+            </div>
+        {% endif %}
+        <div class="text-center">
+            <h1>Enter Details</h1>
+            {% if messages %}
+
+                <div class="alert alert-danger text-center">
+                    <h4>{{ messages }}</h4>
+                </div>
+
+            {% endif %}
+        </div>
+        <hr>
+        {% if form %}
+            <form method="post" action="">
+                {% csrf_token %}
+                {% load crispy_forms_tags %}
+                <div class="row">
+                    <div class="col-lg-3"></div>
+                    <div class="col-lg-6">
+                        {{ form|crispy }}
+                    </div>
+                    <div class="col-lg-3"></div>
+                </div>
+                <div class="text-center">
+
+                    <input type="submit" name="bottlesButton" class="btn btn-dark" value="Submit">
+                </div>
+
+            </form>
+        {% endif %}
+        {% if Deliverform %}
+            <br>
+            <div class="row">
+
+                <div class="col-md-6 text-center">
+                    <h5>19-litre bottles:</h5>
+                </div>
+                <div class="col-md-6">
+                    <p>{{ noOfBottles }}</p>
+                </div>
+            </div>
+            <div class="row">
+
+                <div class="col-md-6 text-center">
+                    <h5>Total amount:</h5>
+                </div>
+                <div class="col-md-6">
+                    <p>{{ total_price }}</p>
+                </div>
+            </div>
+            {% if credit %}
+                <div class="row">
+
+                    <div class="col-md-6 text-center">
+                        <h5>Customer credits:</h5>
+                    </div>
+                    <div class="col-md-6">
+                        <p>{{ credit }}</p>
+                    </div>
+                </div>
+                {% elif prev_amount_due %}
+                <div class="row">
+
+                    <div class="col-md-6 text-center">
+                        <h5>Previous Amount Due:</h5>
+                    </div>
+                    <div class="col-md-6">
+                        <p>{{ prev_amount_due }}</p>
+                    </div>
+                </div>
+            {% endif %}
+            <div class="row">
+
+                <div class="col-md-6 text-center">
+                    <h5>Amount to Receive:</h5>
+                </div>
+                <div class="col-md-6">
+                    <p>{{ amountDue }}</p>
+                </div>
+            </div>
+
+            <hr>
+            <form method="post" action="">
+                {% csrf_token %}
+                {% load crispy_forms_tags %}
+                <div class="row">
+                    <div class="col-lg-3"></div>
+                    <div class="col-lg-6">
+                        {{ Deliverform|crispy }}
+                    </div>
+                    <div class="col-lg-3"></div>
+                </div>
+                <div class="text-center">
+
+                    <input type="submit" name="deliverButton" class="btn btn-dark" value="Submit">
+                </div>
+
+            </form>
+        {% endif %}
+    </div>
+{% endblock %}
+
+{% block footer %}
+    {% include 'components/footer.html' %}
+{% endblock %}

@@ -1,0 +1,94 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+    <title>All Customers</title>
+{% endblock %}
+
+{% block header %}
+    {% include 'components/header.html' %}
+{% endblock %}
+
+{% block content %}
+
+    {% if user.is_authenticated %}
+        <div class="container">
+            <div class="row">
+                <div class="col-3 d-sm-none d-md-block">
+                    <div class="text-center">
+                        <h3>Your Profile</h3>
+                        <hr>
+                    </div>
+                    <div class="card">
+                        <div class="text-center card-header">
+                            <a style="color: black;font-size: 1.3rem">{{ user.name }} </a>
+                        </div>
+                        <div class="card-body">
+
+                            <p class="card-text">No of Bottles:&nbsp;&nbsp;{{ user.NoOfBottles }} </p>
+                            <p class="card-text">Monthly Bill:&nbsp;&nbsp;{{ user.MonthlyBill }} </p>
+                            {% if user.AmountDue < 0 %}
+                                {% load mathfilters %}
+                                <p class="card-text">Credits:&nbsp;&nbsp;{{ user.AmountDue|mul:-1 }} </p>
+                            {% else %}
+                                <p class="card-text">Amount Due:&nbsp;&nbsp;{{ user.AmountDue }} </p>
+                            {% endif %}
+
+                            <div class="text-center card-header bg-transparent">
+                                <a href='{% url 'customer_profile' %}' class="btn btn-dark">View Profile</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-9 col-md-9 col-sm-12 ">
+                    {% if request.user.is_authenticated %}
+                        <div class="text-center">
+                            <h3>Order List</h3>
+                            <hr>
+                        </div>
+
+                        <table class="table table-hover">
+                            <thead>
+                            <tr>
+                                <th scope="col">Date</th>
+                                <th scope="col">Time</th>
+                                <th scope="col">Status</th>
+
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for order in orders %}
+                                <tr>
+                                    <td><a href="{{ order.get_url_customer }}">
+                                        <h5>{{ order.ordered_at.date }}</h5></a>
+                                    </td>
+                                    <td>{{ order.ordered_at.time }}</td>
+                                    {% if order.confirmed %}
+                                        <td>Your order has been confirmed by admin</td>
+                                    {% elif order.delivered %}
+                                        <td>This order was delivered on {{ order.delivered_at }}</td>
+                                    {% else %}
+                                        <td>Your order has not been confirmed by admin</td>
+                                    {% endif %}
+                                </tr>
+                            {% endfor %}
+
+                            </tbody>
+                        </table>
+
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+
+
+    {% endif %}
+
+{% endblock %}
+
+{% block footer %}
+    {% include 'components/footer.html' %}
+{% endblock %}
+
+
+

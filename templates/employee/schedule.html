@@ -1,0 +1,106 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+    <title>All Customers</title>
+{% endblock %}
+
+{% block header %}
+    {% include 'components/header.html' %}
+{% endblock %}
+
+{% block content %}
+
+    {% if user.is_authenticated %}
+        <div class="container">
+            <div class="row">
+                <div class="col-3  d-sm-none d-md-block">
+                    <div class="text-center">
+                        <h3>Your Profile</h3>
+                        <hr>
+                    </div>
+                    <div class="card">
+                        <div class="text-center card-header">
+                            <a style="color: black;font-size: 1.3rem">{{ user.name }} </a>
+                        </div>
+                        <div class="card-body">
+
+                            <p class="card-text">Employee id :&nbsp;&nbsp;{{ user.id }} </p>
+                            <p class="card-text">Received Amount:&nbsp;&nbsp;{{ user.receivedAmount }} </p>
+                            <p class="card-text">Received Bottles:&nbsp;&nbsp;{{ user.receivedBottle }} </p>
+
+
+                            <div class="text-center card-header bg-transparent">
+                                <a href='{% url 'employee_profile' %}' class="btn btn-dark">View Profile</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-9 col-md-9 col-sm-12 ">
+                    {% if request.user.is_authenticated %}
+                        <div class="text-center">
+                            <h3>Vehicle Schedule</h3>
+                            <hr>
+                        </div>
+
+
+
+                        <table class="table table-hover">
+                            <thead>
+                            <tr>
+                                <th scope="col">Area</th>
+                                <th scope="col">City</th>
+
+                            </tr>
+                            </thead>
+                            <tbody>
+
+                            {% for days in schedule %}
+                                <tr>
+                                    <td>
+                                        <h4>{{ days.day }}</h4>
+                                    </td>
+                                    <td>
+
+                                    </td>
+
+                                </tr>
+                                {% for area in days.areas.all %}
+
+                                    <tr>
+                                        <td>
+                                            <a href="{% url 'areawise_orders' regNo days.day area.id %}">
+                                                <h6>{{ area.name }}</h6>
+                                            </a>
+                                        </td>
+                                        <td>
+                                            <h6>{{ area.city }}</h6>
+                                        </td>
+
+                                    </tr>
+
+                                {% endfor %}
+                            {% endfor %}
+                            </tbody>
+                        </table>
+
+
+                        {% if not schedule %}
+                            <h5>No Schedule Added Yet</h5>
+                        {% endif %}
+
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+
+    {% endif %}
+
+{% endblock %}
+
+{% block footer %}
+    {% include 'components/footer.html' %}
+{% endblock %}
+
+
+

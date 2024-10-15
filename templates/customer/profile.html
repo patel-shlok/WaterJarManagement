@@ -1,0 +1,121 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+    <title>Profile</title>
+{% endblock %}
+
+{% block header %}
+    {% include 'components/header.html' %}
+{% endblock %}
+
+{% block content %}
+
+    <div class="container">
+    <div class="text-center">
+        <h1>{{ user.name }}</h1>
+    </div>
+    <hr>
+
+    <div class="container">
+        <div class="row ">
+            <div class="col-md-6 text-lg-right text-md-right">
+                <h5>CNIC :</h5>
+            </div>
+            <div class="col-md-6">
+                <p>{{ user.cnic }}</p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6 text-lg-right text-md-right">
+                <h5>Email :</h5>
+            </div>
+            <div class="col-md-6">
+                <p>{{ user.email }}</p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6 text-lg-right text-md-right">
+                <h5>Phone No :</h5>
+            </div>
+            <div class="col-md-6">
+                <p>{{ user.PhoneNo }}</p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6 text-lg-right text-md-right">
+                <h5>Address :</h5>
+            </div>
+            <div class="col-md-6">
+                <p>{{ user.address }}</p>
+            </div>
+        </div>
+        <hr>
+
+        <div class="row">
+            <div class="col-md-6 text-lg-right text-md-right">
+                <h5>Number of Bottles :</h5>
+            </div>
+            <div class="col-md-6">
+                <p>{{ user.NoOfBottles }}</p>
+            </div>
+        </div>
+    {% if user.AmountDue < 0 %}
+        {% load mathfilters %}
+        <div class="row">
+            <div class="col-md-6 text-lg-right text-md-right">
+                <h5>Credits :</h5>
+            </div>
+            <div class="col-md-6">
+                <p>{{ user.AmountDue|mul:-1 }}</p>
+            </div>
+        </div>
+    {% else %}
+            <div class="row">
+            <div class="col-md-6 text-lg-right text-md-right">
+                <h5>Amount Due :</h5>
+            </div>
+            <div class="col-md-6">
+                <p>{{ user.AmountDue }}</p>
+            </div>
+        </div>
+    {% endif %}
+        <div class="row">
+            <div class="col-md-6 text-lg-right text-md-right ">
+                <h5>Monthly Bill :</h5>
+            </div>
+            <div class="col-md-6">
+                <p>{{ user.MonthlyBill }}</p>
+            </div>
+        </div>
+        <hr>
+        {% for asset in assets %}
+                <div class="row">
+                   {% for items in asset %}
+                        {% if forloop.counter0 == 0 %}
+                              <div class="col-md-6 text-lg-right text-md-right">
+                                <h5>Number of {{ items }}s:</h5>
+                                </div>
+                        {% else %}
+                             <div class="col-md-6">
+                                    <p>{{ items }}</p>
+                                </div>
+                        {% endif %}
+                  {% endfor %}
+                </div>
+            {% endfor %}
+        <div class="row">
+
+            <div class="col-12 text-center mt-3">
+                <a href="/edit_profile/" class=" btn btn-dark">Edit Profile</a>
+            </div>
+
+        </div>
+    </div>
+    </div>
+
+{% endblock %}
+
+{% block footer %}
+    {% include 'components/footer.html' %}
+{% endblock %}

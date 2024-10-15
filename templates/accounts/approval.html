@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+
+{% block title %}
+<title>Approval Wait</title>
+{% endblock %}
+
+
+{% block header %}
+{% include 'components/header.html' %}
+{% endblock %}
+
+{% block content %}
+    <div class="container text-center" style="margin-top:12%;width: 100%">
+        <div class="spinner-grow col-3" role="status">
+            <span class="sr-only">Waiting...</span>
+         </div>
+        <div>
+            <h1 style="margin-top: 20px">Contact Admin</h1>
+            <p>This account is registered and waiting for approval from admin</p>
+        </div>
+    </div>
+{% endblock %}
+

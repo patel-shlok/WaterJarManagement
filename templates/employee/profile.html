@@ -1,0 +1,84 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+    <title>Profile</title>
+{% endblock %}
+
+{% block header %}
+    {% include 'components/header.html' %}
+{% endblock %}
+
+{% block content %}
+
+    <div class="container">
+    <div class="text-center ">
+        <h1>{{ user.name }}</h1>
+    </div>
+    <hr>
+
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6 text-lg-right text-md-right ">
+                <h5>CNIC:</h5>
+            </div>
+            <div class="col-md-6">
+                <p>{{ user.cnic }}</p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6 text-lg-right text-md-right ">
+                <h5>Email:</h5>
+            </div>
+            <div class="col-md-6">
+                <p>{{ user.email }}</p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6 text-lg-right text-md-right ">
+                <h5>Phone No:</h5>
+            </div>
+            <div class="col-md-6">
+                <p>{{ user.PhoneNo }}</p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6 text-lg-right text-md-right ">
+                <h5>Address :</h5>
+            </div>
+            <div class="col-md-6">
+                <p>{{ user.address }}</p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6 text-lg-right text-md-right ">
+                <h5>Amount Received :</h5>
+            </div>
+            <div class="col-md-6">
+                <p>{{ user.receivedAmount }}</p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6 text-lg-right text-md-right ">
+                <h5>Bottles Received :</h5>
+            </div>
+            <div class="col-md-6">
+                <p>{{ user.receivedBottle }}</p>
+            </div>
+        </div>
+        <hr>
+        <div class="row">
+
+            <div class="col-12 text-center ">
+                <a href="/edit_profile/" class=" btn btn-dark">Edit Profile</a>
+            </div>
+
+        </div>
+    </div>
+    </div>
+
+{% endblock %}
+
+{% block footer %}
+    {% include 'components/footer.html' %}
+{% endblock %}

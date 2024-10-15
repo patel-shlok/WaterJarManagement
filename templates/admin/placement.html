@@ -1,0 +1,124 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+    <title>Placement</title>
+{% endblock %}
+
+{% block header %}
+    {% include 'components/header.html' %}
+{% endblock %}
+
+{% block content %}
+
+    {% if request.user.is_authenticated %}
+        <div class="container">
+        <div class="row">
+        <div class="col-3  d-sm-none d-md-block">
+            <div class="text-center">
+                <h3>Your Profile</h3>
+                <hr>
+            </div>
+            <div class="card">
+                <div class="text-center card-header">
+                    <a style="color: black;font-size: 1.3rem">{{ user.name }} </a>
+                </div>
+                <div class="card-body">
+
+                    <p class="card-text">Username:&nbsp;&nbsp;{{ user.username }} </p>
+                    <p class="card-text">email:&nbsp;&nbsp;{{ user.email }} </p>
+                    <p class="card-text">CNIC:&nbsp;&nbsp;{{ user.cnic }} </p>
+                    <p class="card-text">Phone Number:&nbsp;&nbsp;{{ user.PhoneNo }} </p>
+
+
+                    <div class="text-center card-header bg-transparent">
+                        <a href='{% url 'adminProfile' %}' class="btn btn-dark">View Profile</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-9 col-md-9 col-sm-12 ">
+
+
+        <div class="text-center">
+            <h3>{{ day }}'s Placement</h3>
+            <hr>
+        </div>
+
+
+
+        <table class="table table-hover">
+            <thead>
+            <tr>
+                <th scope="col">Product</th>
+                <th scope="col">Quantity</th>
+
+            </tr>
+            </thead>
+            <tbody>
+            {% for product in details %}
+                <tr>
+                    <td>
+                        <h6>{{ product.product.name }}</h6>
+                    </td>
+                    <td>
+                        <h6>{{ product.total_quantity }}</h6>
+                    </td>
+
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+        <hr>
+        <div class="text-center">
+            <h3>Add Extra</h3>
+        </div>
+        <hr>
+
+        <table class="table table-hover">
+            <thead>
+            <tr>
+                <th scope="col">Product</th>
+                <th scope="col">Can Add</th>
+                <th scope="col">Quantity Added</th>
+                <th></th>
+
+            </tr>
+            </thead>
+            <tbody>
+
+                <tr>
+                    <td>
+                        <h6>19-litre Bottles</h6>
+                    </td>
+                    <td>
+                        <h6>{{ extra }}</h6>
+                    </td>
+                    <td>
+                        <form method="post">
+                            {% csrf_token %}
+                            {% load crispy_forms_tags %}
+                            <h6>{{ form.extraBottles|as_crispy_field }}</h6>
+                            <td><input type="submit" value="Add" class="btn btn-dark"></td>
+                        </form>
+
+                    </td>
+
+                </tr>
+
+            </tbody>
+        </table>
+
+
+    {% endif %}
+</div>
+</div>
+</div>
+{% endblock %}
+
+{% block footer %}
+    {% include 'components/footer.html' %}
+{% endblock %}
+
+
+

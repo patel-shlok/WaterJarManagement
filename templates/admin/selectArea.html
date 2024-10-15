@@ -1,0 +1,115 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+    <title>Confirm Order</title>
+{% endblock %}
+
+{% block header %}
+    {% include 'components/header.html' %}
+{% endblock %}
+
+{% block content %}
+
+    <div class="container">
+    <div class="text-center">
+        <h1>order # {{ order.id }}</h1>
+    </div>
+    <hr>
+
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6  text-lg-right text-md-right ">
+                <h5>Date:</h5>
+            </div>
+            <div class="col-md-6">
+                <p>{{ order.ordered_at.date }}</p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6  text-lg-right text-md-right ">
+                <h5>Customer Name:</h5>
+            </div>
+            <div class="col-md-6">
+                <p>{{ order.customer.name }}</p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6  text-lg-right text-md-right ">
+                <h5>Customer Phone No:</h5>
+            </div>
+            <div class="col-md-6">
+                <p>{{ order.customer.PhoneNo }}</p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6  text-lg-right text-md-right ">
+                <h5>Address :</h5>
+            </div>
+            <div class="col-md-6">
+                <p>{{ order.address }}</p>
+            </div>
+        </div>
+        {% if order.area %}
+            <div class="row">
+                <div class="col-md-6  text-lg-right text-md-right ">
+                    <h5>Area :</h5>
+                </div>
+                <div class="col-md-6">
+                    <p>{{ order.area.name }}</p>
+                </div>
+            </div>
+        {% endif %}
+        {% if order.frequency == '1' %}
+            <div class="row">
+                <div class="col-md-6  text-lg-right text-md-right ">
+                    <h5>Order type :</h5>
+                </div>
+                <div class="col-md-6">
+                    <p>Only Once</p>
+                </div>
+            </div>
+        {% elif order.frequency == '2' %}
+            <div class="row">
+                <div class="col-md-6  text-lg-right text-md-right ">
+                    <h5>Order type :</h5>
+                </div>
+                <div class="col-md-6">
+                    <p>Regular</p>
+                </div>
+            </div>
+        {% endif %}
+        {% if order.vehicle %}
+            <div class="row">
+                <div class="col-md-6  text-lg-right text-md-right ">
+                    <h5>Vehicle :</h5>
+                </div>
+                <div class="col-md-6">
+                    <p>{{ order.vehicle.registrationNo }}</p>
+                </div>
+            </div>
+        {% endif %}
+        <hr>
+
+            <form method="post" action="">
+                {% csrf_token %}
+                <div class="row">
+                <div class="col-2"></div>
+                <div class="col-8 text-center">
+                    {% load crispy_forms_tags %}
+                    {{ form|crispy }}
+                    <button type="submit" class="btn btn-dark px-5">Next</button>
+                </div>
+                </div>
+
+
+
+            </form>
+
+    </div>
+    </div>
+{% endblock %}
+
+{% block footer %}
+    {% include 'components/footer.html' %}
+{% endblock %}

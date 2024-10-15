@@ -1,0 +1,110 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+    <title>Order</title>
+{% endblock %}
+
+{% block header %}
+    {% include 'components/header.html' %}
+{% endblock %}
+
+
+{% block content %}
+    <div class="container">
+    <div class="text-center">
+        <h1>Order By</h1>
+    </div>
+    <hr>
+
+    <div class="container">
+    <div class="row">
+        <div class="col-md-6 text-lg-right text-md-right">
+            <h5>Customer:</h5>
+        </div>
+        <div class="col-md-6">
+            <p>{{ customer.name }}</p>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6 text-lg-right text-md-right">
+            <h5>Phone No:</h5>
+        </div>
+        <div class="col-md-6">
+            <p>{{ customer.PhoneNo }}</p>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6 text-lg-right text-md-right">
+            <h5>Address:</h5>
+        </div>
+        <div class="col-md-6">
+            <p>{{ order.address }}</p>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6 text-lg-right text-md-right">
+            <h5>Area:</h5>
+        </div>
+        <div class="col-md-6">
+            <p>{{ order.area.name }}, {{ order.area.city }}</p>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6 text-lg-right text-md-right">
+            <h5>Type:</h5>
+        </div>
+        {% if order.frequency == '1' %}
+            <div class="col-md-6">
+                <p>Only Once</p>
+            </div>
+        {% elif order.frequency == '2' %}
+            <div class="col-md-6">
+                <p>Regular</p>
+            </div>
+        {% endif %}
+    </div>
+    <hr>
+    <div class="text-center">
+        <h1>Order Details</h1>
+    </div>
+    <hr>
+
+
+    {% for items in quantity %}
+        <div class="row">
+            <div class="col-md-6 text-lg-right text-md-right">
+                <h5>{{ items.0 }}</h5>
+            </div>
+            <div class="col-md-6">
+                <p>{{ items.1 }}</p>
+            </div>
+        </div>
+    {% endfor %}
+    <hr>
+    <div class="row">
+        <div class="col-md-6 text-lg-right text-md-right">
+            <h5>Total price : </h5>
+        </div>
+        <div class="col-md-6">
+            <h5>{{ price }}</h5>
+        </div>
+    </div>
+    <hr>
+
+
+    <form action="/customer/order-confirmed/" method="post">
+        {% csrf_token %}
+        <div class="text-center">
+            <button type="submit" value="{{ order }}" class="btn btn-dark" name="order">Confirm</button>
+        </div>
+    </form>
+    </div>
+    </div>
+{% endblock %}
+
+
+
+{% block footer %}
+    {% include 'components/footer.html' %}
+{% endblock %}

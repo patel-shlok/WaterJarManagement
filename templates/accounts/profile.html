@@ -1,0 +1,133 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+    <title>Profile</title>
+{% endblock %}
+
+{% block header %}
+    {% include 'components/header.html' %}
+{% endblock %}
+
+{% block content %}
+
+    <div class="container">
+    <div class="text-center">
+        <h1>{{ user.name }}</h1>
+    </div><hr>
+
+    <div class="container">
+        {% if not request.user.is_superuser %}
+            <div class="row">
+                <div class="col-md-6 text-center">
+                    <h5>User Id</h5>
+                </div>
+                <div class="col-md-6">
+                    <p>{{ user.username }}</p>
+                </div>
+            </div>
+        {% endif %}
+        <div class="row">
+            <div class="col-md-6 text-center">
+                <h5>CNIC:</h5>
+            </div>
+            <div class="col-md-6">
+                <p>{{ user.cnic }}</p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6 text-center">
+                <h5>Email:</h5>
+            </div>
+            <div class="col-md-6">
+                <p>{{ user.email }}</p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6 text-center">
+                <h5>Phone No:</h5>
+            </div>
+            <div class="col-md-6">
+                <p>{{ user.PhoneNo }}</p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6 text-center">
+                <h5>Address :</h5>
+            </div>
+            <div class="col-md-6">
+                <p>{{ user.address }}</p>
+            </div>
+        </div>
+        {% if not user.is_superuser and not user.is_employee %}
+            <div class="row">
+                <div class="col-md-6 text-center">
+                    <h5>Number of Bottles:</h5>
+                </div>
+                <div class="col-md-6">
+                    <p>{{ user.NoOfBottles }}</p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6 text-center">
+                    <h5>Monthly Bill:</h5>
+                </div>
+                <div class="col-md-6">
+                    <p>{{ user.MonthlyBill }}</p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6 text-center">
+                    <h5>Amount Due:</h5>
+                </div>
+                <div class="col-md-6">
+                    <p>{{ user.AmountDue }}</p>
+                </div>
+            </div>
+        {% endif %}
+    <hr>
+        <div class="row">
+
+            {% if not request.user.is_superuser and user.is_customer %}
+                <div class="col-12 text-center">
+                    <a href="/edit_profile/" class= " btn btn-dark">Edit Profile</a>
+                </div>
+            {% endif %}
+            {% if request.user.is_superuser and not user.is_superuser and not user.is_employee %}
+                <div class="row">
+                    <div class="col-12">
+                        <form method="post" action="" novalidate>{% csrf_token %}
+
+                            <div class="form-group">
+
+                                <br>
+                                Number of Bottles:<input class="form-control" type='text' name='NoOfBottles'
+                                                         value='{{ user.NoOfBottles }}'><br>
+                                Monthly Bill:<input class="form-control" type='text' name='MonthlyBill'
+                                                    value='{{ user.MonthlyBill }}'><br>
+                                Amount Due:<input class="form-control" type='text' name='AmountDue'
+                                                  value='{{ user.AmountDue }}'><br>
+                                <label>Approve User:</label><br>
+                                <div class="custom-control custom-radio">
+                                    <input type="radio" name="selected" value="1">Approved<br>
+                                    <input type="radio" name='selected' value="2">Not Approved<br>
+                                    <input type="radio" name="selected" value="3">Block<br></div>
+                                <br><hr>
+                                <button type="Submit" class="btn btn-dark">Save</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+            {% endif %}
+
+
+        </div>
+    </div>
+    </div>
+
+{% endblock %}
+
+{% block footer %}
+    {% include 'components/footer.html' %}
+{% endblock %}

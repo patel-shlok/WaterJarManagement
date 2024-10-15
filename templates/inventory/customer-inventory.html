@@ -1,0 +1,108 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+    <title>Inventory</title>
+{% endblock %}
+
+
+{% block header %}
+    {% include 'components/header.html' %}
+{% endblock %}
+
+{% block content %}
+    {% if message == "Assets Updated Successfully!" %}
+        <div class="alert alert-success text-center">
+            <h5>{{ message }}</h5>
+        </div>
+        {% elif message %}
+        <div class="alert alert-danger text-center">
+            <h5>{{ message }}</h5>
+        </div>
+    {% endif %}
+    <div class="text-center">
+        <h1>Customer Details</h1>
+    </div>
+    <hr>
+
+    <div class="container">
+        <div class="row ">
+            <div class="col-md-6 text-lg-right text-md-right">
+                <h5>Name :</h5>
+            </div>
+            <div class="col-md-6">
+                <p>{{ customer.name }}</p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6 text-lg-right text-md-right">
+                <h5>Username:</h5>
+            </div>
+            <div class="col-md-6">
+                <p>{{ customer.username }}</p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6 text-lg-right text-md-right">
+                <h5>Phone No :</h5>
+            </div>
+            <div class="col-md-6">
+                <p>{{ customer.PhoneNo }}</p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6 text-lg-right text-md-right">
+                <h5>Address :</h5>
+            </div>
+            <div class="col-md-6">
+                <p>{{ customer.address }}</p>
+            </div>
+        </div>
+        <hr>
+
+
+        <div class="text-center">
+            <h1>Assets</h1>
+        </div>
+        <hr>
+
+
+        <form method="post">
+            {% csrf_token %}
+            {% load crispy_forms_tags %}
+            <div class="row">
+                <div class="col-lg-3 text-right">
+                    <h5>{{ newAssetForm.addAsset.label }} :</h5>
+                </div>
+                <div class="col-lg-6 text-left">
+                    {{ newAssetForm.addAsset }}
+                </div>
+                <div class="col-lg-3 text-left">
+                    <input type="submit" class="btn btn-dark" name="newAssetButton" value="Add">
+                </div>
+            </div>
+            <hr>
+        </form>
+        {% if hasFields %}
+            <form method="post">
+                {% csrf_token %}
+                {% load crispy_forms_tags %}
+                <div class="row">
+                    <div class="col-lg-2"></div>
+                    <div class="col-lg-8">{{ assetEditForm|crispy }}</div>
+                    <div class="col-lg-2"></div>
+                </div>
+                <hr>
+                <div class="text-center mt-5 ">
+                    <input type="submit" class="btn btn-dark px-5 py-3" name="editAssetButton">
+                </div>
+            </form>
+        {% endif %}
+    </div>
+
+
+{% endblock %}
+
+{% block footer %}
+    {% include 'components/footer.html' %}
+{% endblock %}

@@ -1,0 +1,168 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block style %}
+    <style type="text/css">
+    .cus{
+        position: relative;
+        top: -16px;
+    }
+    </style>
+{% endblock %}
+{% block title %}
+    <title>All Customers</title>
+{% endblock %}
+
+{% block header %}
+    {% include 'components/header.html' %}
+{% endblock %}
+
+{% block content %}
+
+    {% if user.is_authenticated %}
+        <div class="container">
+            <div class="row">
+                <div class="col-3  d-sm-none d-md-block">
+            <div class="text-center">
+                <h3>Your Profile</h3><hr>
+            </div>
+            <div class="card">
+              <div class="text-center card-header">
+                <a  style="color: black;font-size: 1.3rem" >{{user.name}} </a>
+            </div>
+              <div class="card-body">
+
+                            <p class="card-text">Username:&nbsp;&nbsp;{{ user.username }} </p>
+                            <p class="card-text">email:&nbsp;&nbsp;{{ user.email }} </p>
+                            <p class="card-text">CNIC:&nbsp;&nbsp;{{ user.cnic }} </p>
+                            <p class="card-text">Phone Number:&nbsp;&nbsp;{{ user.PhoneNo }} </p>
+
+{% if details_of_asset != None %}
+     <div class="text-center card-header bg-transparent">
+                <a href = '{% url 'adminProfile' %}'   class="btn btn-dark">View Profile</a>
+                  </div>
+              </div>
+            </div>
+        </div>
+        <div class="col-lg-9 col-md-9 col-sm-12 ">
+            <div class="text-center">
+                <h3>Edit Asset</h3>
+            </div><hr>
+            {% if error %}
+                <div class="alert alert-danger text-center" role="alert">
+                  {{error}}
+                </div>
+            {% endif %}
+            {% if massege %}
+                <div class="alert alert-success text-center" role="alert">
+                  {{massege}}
+                </div>
+            {% endif %}
+
+            <form method="post" action="{% url 'asset-details' details_of_asset.id %}" >
+                {% csrf_token %}
+                  <div class="row">
+                      <div class="col-2"></div>
+                  <div class="form-group col-8">
+                    <label for="exampleFormControlInput1">Asset Name*</label>
+                    <input type="text" class="form-control" required name="name" value="{{details_of_asset.name}}">
+                  </div>
+                  </div>
+                  <div class="row">
+                      <div class="col-2"></div>
+                  <div class="form-group col-8">
+                    <label for="exampleFormControlInput1">Total Amount*</label>
+                    <input type="number" class="form-control" required name="total_amount" value="{{details_of_asset.total_amount}}">
+                  </div>
+                  </div>
+                  <div class="row">
+                      <div class="col-2"></div>
+                  <div class="form-group col-8">
+                    <label for="exampleFormControlTextarea1">Description</label>
+                    <textarea class="form-control" rows="10" type="text" name="desc">{{details_of_asset.desc}}</textarea>
+                  </div>
+                  </div>
+                 <div class="text-center mt-5">
+                    <button type="submit" class="btn btn-dark">Save</button>
+                 </div>
+                <div class="text-center my-1">
+                    <button type="submit" class="btn btn-danger" value="{{ details_of_asset.id }}" name="delete"
+                                                onclick="return confirm('Are you sure you want to delete this item?');">
+                                            Delete
+                                        </button>
+                </div>
+                </form>
+
+
+
+        </div>
+    </div>
+    </div>
+
+
+{% else %}
+     <div class="text-center card-header bg-transparent">
+                <a href = '{% url 'adminProfile' %}'   class="btn btn-dark">View Profile</a>
+                  </div>
+              </div>
+            </div>
+        </div>
+        <div class="col-lg-9 col-md-9 col-sm-12 ">
+            <div class="text-center">
+                <h3>Add Asset</h3>
+            </div><hr>
+            {% if error %}
+                <div class="alert alert-danger text-center" role="alert">
+                  {{error}}
+                </div>
+            {% endif %}
+            {% if massege %}
+                <div class="alert alert-success text-center" role="alert">
+                  {{massege}}
+                </div>
+            {% endif %}
+
+
+            <form method="post" >
+                {% load crispy_forms_tags %}
+                {% csrf_token %}
+            <div class="row">
+                <div class="col-2"></div>
+                <div class="col-8">
+                    {{ form.name|as_crispy_field }}
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-2"></div>
+                <div class="col-8">
+                    {{ form.total_amount|as_crispy_field }}
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-2"></div>
+                <div class="col-8">
+                    {{ form.desc|as_crispy_field }}
+                </div>
+            </div>
+            <div class="text-center my-5">
+                <button type="submit" class="btn btn-dark px-5 py-3">Register</button>
+            </div>
+            </form>
+
+        </div>
+
+
+{% endif %}
+    {% endif %}
+    </div>
+    </div>
+
+
+{% endblock %}
+
+{% block footer %}
+    {% include 'components/footer.html' %}
+{% endblock %}
+
+
+

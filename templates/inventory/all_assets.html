@@ -1,0 +1,83 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block style %}
+    <style type="text/css">
+    .cus{
+        position: relative;
+        top: -17px;
+    }
+    </style>
+{% endblock %}
+{% block title %}
+    <title>Assets</title>
+{% endblock %}
+
+{% block header %}
+    {% include 'components/header.html' %}
+{% endblock %}
+
+{% block content %}
+
+    {% if user.is_authenticated %}
+        <div class="container">
+            <div class="row">
+                   <div class="col-3  d-sm-none d-md-block">
+            <div class="text-center">
+                <h3>Your Profile</h3><hr>
+            </div>
+            <div class="card">
+              <div class="text-center card-header">
+                <a  style="color: black;font-size: 1.3rem" >{{user.name}} </a>
+            </div>
+              <div class="card-body">
+
+                            <p class="card-text">Username:&nbsp;&nbsp;{{ user.username }} </p>
+                            <p class="card-text">email:&nbsp;&nbsp;{{ user.email }} </p>
+                            <p class="card-text">CNIC:&nbsp;&nbsp;{{ user.cnic }} </p>
+                            <p class="card-text">Phone Number:&nbsp;&nbsp;{{ user.PhoneNo }} </p>
+
+
+
+                  <div class="text-center card-header bg-transparent">
+                <a href = '{% url 'adminProfile' %}'   class="btn btn-dark">View Profile</a>
+                  </div>
+              </div>
+            </div>
+        </div>
+        <div class="col-lg-9 col-md-9 col-sm-12 ">
+            <table class="table table-hover">
+                <thead>
+                <tr>
+                    <th scope="col">Name</th>
+                    <th scope="col">Code</th>
+                    <th scope="col">Total Amount</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for asset in assets %}
+                    <tr>
+                        <td><a href="#">
+                            <h5>{{ asset.name }}</h5></a>
+                        </td>
+                        <td>{{ asset.code }}</td>
+                        <td>{{ asset.total_amount }}</td>
+                    </tr>
+                {% endfor %}
+
+                </tbody>
+            </table>
+
+
+
+        </div>
+    {% endif %}
+</div>
+</div>
+{% endblock %}
+
+{% block footer %}
+    {% include 'components/footer.html' %}
+{% endblock %}
+
+
+

@@ -1,0 +1,91 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+    <title>Confirmed Orders</title>
+{% endblock %}
+
+
+{% block header %}
+    {% include 'components/header.html' %}
+{% endblock %}
+
+{% block content %}
+
+    {% if user.is_authenticated %}
+        <div class="container">
+    <div class="row">
+        <div class="col-3  d-sm-none d-md-block">
+            <div class="text-center">
+                <h3>Your Profile</h3><hr>
+            </div>
+            <div class="card">
+              <div class="text-center card-header">
+                <a  style="color: black;font-size: 1.3rem" >{{user.name}} </a>
+            </div>
+              <div class="card-body">
+
+            <p class="card-text">Employee id :&nbsp;&nbsp;{{ user.id }} </p>
+            <p class="card-text">Received Amount:&nbsp;&nbsp;{{ user.receivedAmount }} </p>
+            <p class="card-text">Received Bottles:&nbsp;&nbsp;{{ user.receivedBottle }} </p>
+
+
+
+                  <div class="text-center card-header bg-transparent">
+                <a href = '{% url 'employee_profile' %}'   class="btn btn-dark">View Profile</a>
+                  </div>
+              </div>
+            </div>
+        </div>
+        <div class="col-lg-9 col-md-9 col-sm-12 ">
+            {% if request.user.is_authenticated %}
+                        <div class="text-center">
+                            <h3>{{ massege }}</h3>
+                            <hr>
+                        </div>
+                        {% if error %}
+                        <div class="text-center mt-5">
+                            <div class="alert alert-danger text-center">
+                                <h4>{{ error }}</h4>
+                            </div>
+
+                        </div>
+                        {% endif %}
+
+                        {% for order in orders %}
+                            <div class="card">
+                                <div class="text-center">
+                                    <h5 class="card-header">Order Id: {{ order.id }}</h5>
+                                </div>
+                                <div class="card-body">
+                                    {% if order.delivered %}
+                                        <h5 class="card-title">Delivery Date/Time: {{ order.delivered_at }}</h5>
+                                    {% else %}
+                                        <h5 class="card-title">Order Date/Time: {{ order.ordered_at }}</h5>
+                                    {% endif %}
+                                    {% if  order.confirmed %}
+                                        <h5 class="card-title">Status: Confirmed by admin but not delivered yet</h5>
+                                    {% else %}
+                                        <h5 class="card-title">Status: Not confirmed by admin yet</h5>
+                                    {% endif %}
+                                    <div class="text-center">
+                                        <a href="{{ order.get_url_employee }}" class="btn btn-dark">View Details</a>
+                                    </div>
+                                </div>
+
+                            </div>
+                        {% endfor %}
+                    {% endif %}
+                </div>
+
+
+            </div>
+        </div>
+
+    {% endif %}
+
+{% endblock %}
+
+{% block footer %}
+    {% include 'components/footer.html' %}
+{% endblock %}

@@ -1,0 +1,198 @@
+{% load static %}
+
+{% block title %}
+    <title>Home</title>
+{% endblock %}
+
+<nav class="navbar navbar-expand-lg navbar-light bg-primary mb-4">
+    <div class="container">
+        <a class="navbar-brand" href="#">
+            <img src={% static 'img/logos.png' %} width="100" height="100" alt="">
+        </a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup"
+                aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+
+            <ul class="navbar-nav mr-auto">
+
+                <li class="nav-item">
+                    <a class="nav-item nav-link active"
+                            {% if request.user.is_customer %}
+                       href='/customer/home/'
+                            {% elif request.user.is_employee %}
+                       href="/employee/home/"
+                            {% elif request.user.is_superuser %}
+                       href='/admin/home/'
+                            {% else %}
+                       href="/home/"
+                            {% endif %}
+
+
+                    >Home <span class="sr-only">(current)</span></a>
+                </li>
+                {% if request.user.is_authenticated and request.user.is_superuser %}
+
+                    <li class="nav-item">
+                        <a class="nav-link" href="/admin/orders">Orders</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/admin/records">Records</a>
+                    </li>
+
+                    <li class="dropdown nav-item">
+                        <button class="btn btn-light dropdown-toggle" type="button" id="dropdownMenuButton"
+                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Inventory
+                        </button>
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                            <a class="nav-link" href="/inventory/inventory_all">Overall Inventory</a>
+                            <a class="nav-link" href="/inventory/customer-inventory">Customer wise</a>
+                            <a class="nav-link" href="/inventory/add-asset">Add New</a>
+                            <a class="nav-link" href="/inventory/bottles">Bottles</a>
+
+                        </div>
+                    </li>
+
+
+
+
+                    <li class="dropdown nav-item">
+                        <button class="btn btn-light dropdown-toggle" type="button" id="dropdownMenuButton"
+                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Customers
+                        </button>
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                            <a class="nav-link" href="/admin/requests">Requests</a>
+                            <a class="nav-link" href="/admin/notInAreaRequests">Out of area</a>
+                            <a class="nav-link" href="/admin/all">All Customers</a>
+
+                        </div>
+                    </li>
+
+
+
+                    <li class="dropdown nav-item">
+                        <button class="btn btn-light dropdown-toggle" type="button" id="dropdownMenuButton"
+                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Employee
+                        </button>
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                            <a class="nav-link" href="/admin/allEmployee">All Employee</a>
+                            <a class="nav-link" href="/admin/newEmployee">Add Employee</a>
+
+
+                        </div>
+                    </li>
+                    <li class="dropdown nav-item">
+                        <button class="btn btn-light dropdown-toggle" type="button" id="dropdownMenuButton"
+                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Locations
+                        </button>
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                            <a class="nav-link" href="/admin/allCities">All Cities</a>
+                            <a class="nav-link" href="/admin/newCity">Add City</a>
+                            <a class="nav-link" href="/admin/newArea">Add Area</a>
+
+
+                        </div>
+                    </li>
+
+                    <li class="dropdown nav-item">
+                        <button class="btn btn-light dropdown-toggle" type="button" id="dropdownMenuButton"
+                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Vehicle
+                        </button>
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                            <a class="nav-link" href="/admin/allVehicles">All Vehicles</a>
+                            <a class="nav-link" href="/admin/newVehicle">Add Vehicle</a>
+
+
+                        </div>
+                    </li>
+                    <li class="dropdown nav-item">
+                        <button class="btn btn-light dropdown-toggle" type="button" id="dropdownMenuButton"
+                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Schedule
+                        </button>
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                            <a class="nav-link" href="/admin/selVehicle/show">Schedule</a>
+                            <a class="nav-link" href="/admin/selVehicle/update">Edit Schedule</a>
+
+
+                        </div>
+                    </li>
+                    <li class="dropdown nav-item">
+                        <button class="btn btn-light dropdown-toggle" type="button" id="dropdownMenuButton"
+                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Products
+                        </button>
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                            <a class="nav-link" href="{% url 'all_product' %}">All Products</a>
+                            <a class="nav-link" href="{% url 'add_product' %}">Add Product</a>
+
+                        </div>
+                    </li>
+
+
+                {% elif request.user.is_authenticated and request.user.is_customer %}
+
+                    <li class="nav-item">
+                        <a class="nav-link" href="/customer/order">Order</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/customer/all-orders">My Orders</a>
+                    </li>
+                {% elif request.user.is_authenticated and request.user.is_employee %}
+
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'show_employee_schedules' %}">Schedule</a>
+                    </li>
+                    <li class="dropdown nav-item">
+                        <button class="btn btn-light dropdown-toggle" type="button" id="dropdownMenuButton"
+                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Orders
+                        </button>
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                            <a class="nav-link" href="/employee/confirmed_not_delivered_orders">Confirmed Orders</a>
+                            <a class="nav-link" href="/employee/delivered_orders">Delivered Orders</a>
+                            <a class="nav-link" href="/employee/not_confirmed">Pending Orders</a>
+
+                        </div>
+                    </li>
+
+                {% endif %}
+            </ul>
+
+            {% if request.user.is_authenticated %}
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/auth/logout">Logout</a>
+                    </li>
+                </ul>
+            {% else %}
+                <ul class="navbar-nav ml-auto">
+                    <li class="dropdown nav-item">
+                        <button class="btn btn-light dropdown-toggle" type="button" id="dropdownMenuButton"
+                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Register
+                        </button>
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                            <a class="nav-link" href="/auth/register-customer">Customer</a>
+                            <a class="nav-link" href="/auth/register-corporate">Corporate</a>
+
+                        </div>
+                    </li>
+
+
+                    <li class="nav-item">
+                        <a class="nav-link" href="/auth/login">Login</a>
+                    </li>
+                </ul>
+
+            {% endif %}
+        </div>
+    </div>
+    </div>
+</nav>
